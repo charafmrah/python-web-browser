@@ -6,7 +6,7 @@
 
  <h3 align="center">Python Web Browser</h3>
 <p align="center">
-    This is a simple and fast web browser built with Python and PyQt6. It allows you to browse the web and access all your favorite websites.
+    A simple and fast web browser built with Python and PyQt6. It allows you to browse the web and access all your favorite websites.
     <br />
     <a href="https://github.com/charafmrah/network-intrusion-detection"><strong>Explore the docs »</strong></a>
     <br />
