@@ -14,17 +14,29 @@ class Browser(QMainWindow):
 
         # Create a search bar and search button
         self.search_layout = QHBoxLayout()
+
+        # Create a back button and forward button
+        self.back_button = QPushButton('Back')
+        # Set the minimum width of the back button to a smaller value
+        self.back_button.setMinimumWidth(30)
+        self.forward_button = QPushButton('Forward')
+        # Set the minimum width of the forward button to a smaller value
+        self.forward_button.setMinimumWidth(30)
+
+        # Add the back button and forward button to the search layout
+        self.search_layout.addWidget(self.back_button)
+        self.search_layout.addWidget(self.forward_button)
+
+        # Add the search bar and search button to the search layout
         self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText("Enter a URL or search query")
+        self.search_bar.returnPressed.connect(self.search)
         self.search_button = QPushButton('Search')
         self.search_layout.addWidget(self.search_bar)
         self.search_layout.addWidget(self.search_button)
 
-        # Create a back button
-        self.back_button = QPushButton('Back')
-
-        # Add the search bar, search button, and back button to the layout
+        # Add the search layout to the main layout
         self.layout.addLayout(self.search_layout)
-        self.layout.addWidget(self.back_button)
 
         # Create a QWebEngineView widget and add it to the layout
         self.webview = QWebEngineView()
@@ -36,8 +48,11 @@ class Browser(QMainWindow):
         # Connect the back button's clicked signal to the webview's back slot
         self.back_button.clicked.connect(self.webview.back)
 
+        # Connect the forward button's clicked signal to the webview's forward slot
+        self.forward_button.clicked.connect(self.webview.forward)
+
         # Load a web page
-        self.webview.load(QUrl('https://www.example.com'))
+        self.webview.load(QUrl('https://www.charafmrah.com'))
 
     def search(self):
         # Get the search query from the search bar
