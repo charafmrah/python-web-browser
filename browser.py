@@ -1,54 +1,58 @@
-import sys
-from PyQt5.QtCore import QUrl
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QVBoxLayout, QWidget
-from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
+from PyQt6.QtCore import QUrl
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
+from PyQt6.QtWebEngineWidgets import QWebEngineView
 
 
 class Browser(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Set the size of the main window
-        self.resize(800, 600)
+        # Set up the user interface
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        self.layout = QVBoxLayout(self.central_widget)
 
-        # Create a QWebEngineView widget
-        self.view = QWebEngineView(self)
+        # Create a search bar and search button
+        self.search_layout = QHBoxLayout()
+        self.search_bar = QLineEdit()
+        self.search_button = QPushButton('Search')
+        self.search_layout.addWidget(self.search_bar)
+        self.search_layout.addWidget(self.search_button)
 
-        # Create a QLineEdit widget for the search bar
-        self.search_bar = QLineEdit(self)
-        self.search_bar.setPlaceholderText("Enter a URL or search query")
+        # Create a back button
+        self.back_button = QPushButton('Back')
 
-        # Create a QWidget to hold the search bar and the web view,
-        # and set it as the central widget of the main window
-        central_widget = QWidget(self)
-        layout = QVBoxLayout(central_widget)
-        layout.addWidget(self.search_bar)
-        layout.addWidget(self.view)
-        self.setCentralWidget(central_widget)
+        # Add the search bar, search button, and back button to the layout
+        self.layout.addLayout(self.search_layout)
+        self.layout.addWidget(self.back_button)
 
-        # Connect the search bar's returnPressed signal to a slot
-        self.search_bar.returnPressed.connect(
-            self.on_search_bar_return_pressed)
+        # Create a QWebEngineView widget and add it to the layout
+        self.webview = QWebEngineView()
+        self.layout.addWidget(self.webview)
 
-        # Connect the view's loadFinished signal to a slot
-        self.view.loadFinished.connect(self.on_load_finished)
+        # Connect the search button's clicked signal to the search function
+        self.search_button.clicked.connect(self.search)
 
-        # Set the default URL to open
-        self.view.setUrl(QUrl("http://www.google.com"))
+        # Connect the back button's clicked signal to the webview's back slot
+        self.back_button.clicked.connect(self.webview.back)
 
-    def on_search_bar_return_pressed(self):
-        # Update the QWebEngineView's URL when the user hits the Enter key in the search bar
-        url = self.search_bar.text()
-        self.view.setUrl(QUrl(url))
+        # Load a web page
+        self.webview.load(QUrl('https://www.example.com'))
 
-    def on_load_finished(self):
-        # When the page is finished loading, update the search bar with the current URL
-        # and set the title of the main window to the title of the web page
-        self.search_bar.setText(self.view.url().toString())
-        self.setWindowTitle(self.view.title())
+    def search(self):
+        # Get the search query from the search bar
+        query = self.search_bar.text()
+
+        # Perform a search using the search query
+        self.webview.load(QUrl(f'https://www.google.com/search?q={query}'))
 
 
-app = QApplication(sys.argv)
-browser = Browser()
-browser.show()
-sys.exit(app.exec_())
+def main():
+    app = QApplication([])
+    window = Browser()
+    window.show()
+    app.exec()
+
+
+if __name__ == '__main__':
+    main()
