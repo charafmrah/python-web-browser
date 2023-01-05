@@ -8,12 +8,12 @@
 <p align="center">
     A simple and fast web browser built with Python and PyQt6. It allows you to browse the web and access all your favorite websites.
     <br />
-    <a href="https://github.com/charafmrah/network-intrusion-detection"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/charafmrah/python-web-browser"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/charafmrah/network-intrusion-detection/issues">Report Bug</a>
+    <a href="https://github.com/charafmrah/python-web-browser/issues">Report Bug</a>
     ·
-    <a href="https://github.com/charafmrah/network-intrusion-detection/issues">Request Feature</a>
+    <a href="https://github.com/charafmrah/python-web-browser/issues">Request Feature</a>
   </p>
 </div>
 
